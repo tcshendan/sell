@@ -101,6 +101,7 @@
           click: true
         });
         this.foodsScroll = new BScroll(this.$els.foodsWrapper, {
+          click: true,
           probeType: 3
         });
         this.foodsScroll.on('scroll', (pos) => {
@@ -229,5 +230,5 @@
           .cartcontrol-wrapper
             position: absolute
             right: 0
-            bottom: 12px        
+            bottom: 12px
 </style>
