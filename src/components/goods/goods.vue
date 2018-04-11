@@ -45,7 +45,9 @@
   import BScroll from 'better-scroll';
   import shopcart from 'components/shopcart/shopcart';
   import cartcontrol from 'components/cartcontrol/cartcontrol';
+
   const ERR_OK = 0;
+
   export default {
     props: {
       seller: {
@@ -148,6 +150,7 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/mixin.styl";
+  
   .goods
     display: flex
     position: absolute

@@ -206,6 +206,7 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/mixin.styl";
+  
   .shopcart
     position: fixed
     left: 0
