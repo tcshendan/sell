@@ -1,6 +1,13 @@
 <template>
   <div v-show="showFlag" class="food" transition="move">
-
+    <div class="food-content">
+      <div class="image-header">
+        <img :src="food.image">
+        <div class="back" @click="hide">
+          <i class="icon-arrow_lift"></i>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -19,6 +26,9 @@
     methods: {
       show () {
         this.showFlag = true;
+      },
+      hide () {
+        this.showFlag = false;
       }
     }
   };
@@ -38,4 +48,24 @@
       transform: translate3d(0, 0, 0)
     &.move-enter, &.move-leave
       transform: translate3d(100%, 0, 0)
+    .image-header
+      position: relative
+      width: 100%
+      height: 0
+      padding-top: 100%
+      img
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+      .back
+        position: absolute
+        top: 10px
+        left: 0
+        .icon-arrow_lift
+          display: block
+          padding: 10px
+          font-size: 20px
+          color: #fff
 </style>
