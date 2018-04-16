@@ -1,5 +1,5 @@
 <template>
-  <div v-show="showFlag" class="food">
+  <div v-show="showFlag" class="food" transition="move">
 
   </div>
 </template>
@@ -9,6 +9,16 @@
     props: {
       food: {
         type: Object
+      }
+    },
+    data () {
+      return {
+        showFlag: false
+      };
+    },
+    methods: {
+      show () {
+        this.showFlag = true;
       }
     }
   };
@@ -23,4 +33,9 @@
     z-index: 30
     width: 100%
     background: #fff
+    &.move-transition
+      transition: all 0.2s linear
+      transform: translate3d(0, 0, 0)
+    &.move-enter, &.move-leave
+      transform: translate3d(100%, 0, 0)
 </style>
