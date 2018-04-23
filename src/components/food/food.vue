@@ -201,6 +201,7 @@
       .title
         line-height: 14px
         margin-left: 18px
+        margin-bottom: 18px
         font-size: 14px
         color: rgb(7, 17, 27)
   </style>
