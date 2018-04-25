@@ -33,7 +33,7 @@
         <ratingselect :select-type="selectType" :only-content="onlyContent" :desc="desc" :ratings="food.ratings"></ratingselect>
         <div class="rating-wrapper">
           <ul v-show="food.ratings && food.ratings.length">
-            <li v-for="rating in food.ratings" class="rating-item border-1px">
+            <li v-show="needShow(rating.rateType, rating.text)" v-for="rating in food.ratings" class="rating-item border-1px">
               <div class="user">
                 <span class="name">{{rating.username}}</span>
                 <img class="avatar" width="12" height="12" :src="rating.avatar">
@@ -44,7 +44,7 @@
               </p>
             </li>
           </ul>
-          <div class="no-rating" v-show="!food.ratings || !food.ratings.length"></div>
+          <div class="no-rating" v-show="!food.ratings || !food.ratings.length">暂无评价</div>
         </div>
       </div>
     </div>
@@ -58,8 +58,6 @@
   import split from 'components/split/split';
   import ratingselect from 'components/ratingselect/ratingselect';
 
-  // const POSITIVE = 0;
-  // const NEGATIVE = 1;
   const ALL = 2;
 
   export default {
@@ -84,7 +82,7 @@
       show () {
         this.showFlag = true;
         this.selectType = ALL;
-        this.onlyContent = true;
+        this.onlyContent = false;
         this.$nextTick(() => {
           if (!this.scroll) {
             this.scroll = new BScroll(this.$els.food, {
@@ -104,6 +102,30 @@
         }
         this.$dispatch('cart.add', event.target);
         Vue.set(this.food, 'count', 1);
+      },
+      needShow (type, text) {
+        if (this.onlyContent && !text) {
+          return false;
+        }
+        if (this.selectType === ALL) {
+          return true;
+        } else {
+          return type === this.selectType;
+        }
+      }
+    },
+    events: {
+      'ratingtype.select' (type) {
+        this.selectType = type;
+        this.$nextTick(() => {
+          this.scroll.refresh();
+        });
+      },
+      'content.toggle' (onlyContent) {
+        this.onlyContent = onlyContent;
+        this.$nextTick(() => {
+          this.scroll.refresh();
+        });
       }
     },
     components: {
@@ -258,4 +280,8 @@
               color: rgb(0, 160, 220)
             .icon-thumb_down
               color: rgb(147, 153, 159)
+        .no-rating
+          padding: 16px
+          font-size: 12px
+          color: rgb(147, 153, 159)
   </style>
