@@ -86,6 +86,7 @@
 
   .ratingselect
     .rating-type
+      padding-top: 18px
       padding-bottom: 18px
       margin: 0 18px
       border-1px(rgba(7, 17, 27, 0.1))
