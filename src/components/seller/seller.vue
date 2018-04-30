@@ -1,5 +1,5 @@
 <template>
-  <div class="seller">
+  <div class="seller" v-el:seller>
     <div class="seller-content">
       <div class="overview">
         <h1 class="title">{{seller.name}}</h1>
@@ -29,12 +29,27 @@
           </li>
         </ul>
       </div>
+      <split></split>
+      <div class="bulletin">
+        <h1 class="title">公告与活动</h1>
+        <div class="content-wrapper border-1px">
+          <p class="content">{{seller.bulletin}}</p>
+        </div>
+        <ul v-if="seller.supports" class="supports">
+          <li class="support-item border-1px" v-for="item in seller.supports">
+            <span class="icon" :class="classMap[seller.supports[$index].type]"></span>
+            <span class="text">{{seller.supports[$index].description}}</span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import BScroll from 'better-scroll';
   import star from 'components/star/star';
+  import split from 'components/split/split';
 
   export default {
     props: {
@@ -42,8 +57,31 @@
         type: Object
       }
     },
+    created () {
+      this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
+    },
+    watch: {
+      'seller' () {
+        this._initScroll();
+      }
+    },
+    ready () {
+      this._initScroll();
+    },
+    methods: {
+      _initScroll () {
+        if (!this.scroll) {
+          this.scroll = new BScroll(this.$els.seller, {
+            click: true
+          });
+        } else {
+          this.scroll.refresh();
+        }
+      }
+    },
     components: {
-      star
+      star,
+      split
     }
   };
 </script>
@@ -101,4 +139,48 @@
             color: rgb(7, 17, 27)
             .stress
               font-size: 24px
+    .bulletin
+      padding: 18px 18px 0 18px
+      .title
+        margin-bottom: 8px
+        line-height: 14px
+        font-size: 14px
+        color: rgb(7, 17, 27)
+      .content-wrapper
+        padding: 0 12px 16px 12px;
+        border-1px(rgba(7, 17, 27, 0.1))
+        .content
+          line-height: 24px
+          font-size: 12px
+          color: rgb(240, 20, 20)
+      .supports
+        .support-item
+          padding: 16px 12px
+          font-size: 0
+          border-1px(rgba(7, 17, 27, 0.1))
+          &:last-child
+            border-none()
+          .icon
+            display: inline-block
+            width: 16px
+            height: 16px
+            vertical-align: top
+            margin-right: 6px
+            background-size: 16px 16px
+            background-repeat: no-repeat
+            &.decrease
+              bg-image('decrease_4')
+            &.discount
+              bg-image('discount_4')
+            &.guarantee
+              bg-image('guarantee_4')
+            &.invoice
+              bg-image('invoice_4')
+            &.special
+              bg-image('special_4')
+          .text
+            line-height: 16px
+            font-size: 12px
+            font-weight: 200
+            color: rgb(7, 17, 27)
 </style>
