@@ -18,6 +18,9 @@ let router = new VueRouter({
 });
 
 router.map({
+  '/': {
+    component: goods
+  },
   '/goods': {
     component: goods
   },
@@ -26,9 +29,6 @@ router.map({
   },
   '/seller': {
     component: seller
-  },
-  '/': {
-    component: goods
   }
 });
 
